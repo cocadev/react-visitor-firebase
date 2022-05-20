@@ -118,7 +118,6 @@ export const deleteNewAEVLocation = (id) => {
     return Axios.delete(`new-aev-locations/${id}`)
 }
 
-
 export const listSecurityChecks = (page, size) => {
     return Axios.get(`/security-checks?size=${size}&page=${page}`)
 }

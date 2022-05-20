@@ -70,7 +70,6 @@ function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [open, setOpen] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
-
   const { username, password } = state;
 
   const handleInput = (e) => {
@@ -82,7 +81,6 @@ function Login() {
       setState({ ...state, [id]: value })
     }
   };
-
   const handleClose = () => {
     return true;
   }
@@ -120,7 +118,6 @@ function Login() {
           <br /><br />
           <FormControl variant="outlined" fullWidth>
             <InputLabel htmlFor="outlined-password">Password</InputLabel>
-
             <OutlinedInput
               value={password}
               // margin="dense"
