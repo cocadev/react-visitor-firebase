@@ -16,16 +16,27 @@ import {
   where,
   addDoc,
 } from "firebase/firestore";
+
 const firebaseConfig = {
-    apiKey: "AIzaSyA3rJ1ZGRkIxR9hblnNhP2REDApGUXyQGk",
-  authDomain: "my-project-4701e.firebaseapp.com",
-  databaseURL: "https://my-project-4701e-default-rtdb.firebaseio.com",
-  projectId: "my-project-4701e",
-  storageBucket: "my-project-4701e.appspot.com",
-  messagingSenderId: "978280351801",
-  appId: "1:978280351801:web:c2f25430f317a53469e5e8",
-  measurementId: "G-KM7SRKJRK5"
+  apiKey: "AIzaSyCHRw5UGNeRYVFLYvLqFHK7iAzUJoaluW0",
+  authDomain: "digisic-visitor-pass.firebaseapp.com",
+  projectId: "digisic-visitor-pass",
+  storageBucket: "digisic-visitor-pass.appspot.com",
+  messagingSenderId: "423753356545",
+  appId: "1:423753356545:web:8acec5c04dafacde3e3700",
+  measurementId: "G-QTN7XTWPKL"
 };
+
+// const firebaseConfig = {
+//   apiKey: "AIzaSyA3rJ1ZGRkIxR9hblnNhP2REDApGUXyQGk",
+//   authDomain: "my-project-4701e.firebaseapp.com",
+//   databaseURL: "https://my-project-4701e-default-rtdb.firebaseio.com",
+//   projectId: "my-project-4701e",
+//   storageBucket: "my-project-4701e.appspot.com",
+//   messagingSenderId: "978280351801",
+//   appId: "1:978280351801:web:c2f25430f317a53469e5e8",
+//   measurementId: "G-KM7SRKJRK5"
+// };
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
