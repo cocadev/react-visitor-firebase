@@ -91,7 +91,7 @@ export default function Users() {
         setCount(result.data.totalCount);
       })
       .catch((e) => {
-        if (e.response.status == 401 || e.response.status == 403) {
+        if (e.response?.status == 401 || e.response?.status == 403) {
           history.push("/logout");
         }
         setLoading(false);

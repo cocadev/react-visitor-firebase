@@ -110,7 +110,7 @@ export default function UserDetail() {
       console.log(e)
     }).finally(() => {
       toggle()
-      history.push("/admin/users")
+      // history.push("/admin/users")
     })
   }, [param, history, toggle])
   const handleChange = (event) => {

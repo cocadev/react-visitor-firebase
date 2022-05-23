@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useHistory, useParams, useLocation } from 'react-router-dom';
+import { useHistory, useParams, useLocation, Link  } from 'react-router-dom';
 import Grid from "@material-ui/core/Grid";
+import { useAuthState } from "react-firebase-hooks/auth";
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -15,7 +16,10 @@ import { getPortalToken } from "apis";
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { requestSignup } from "apis";
-import database from '../../firebase';
+import  { auth,
+registerWithEmailAndPassword,
+signInWithGoogle,
+} from '../../firebase';
 
 // const useStyles = makeStyles((theme) => ({
 //     container: {
@@ -211,35 +215,46 @@ import database from '../../firebase';
 // }
 
 function Signup(){
-const [email , setEmail] = useState();
-const [firstname , setFirstname] = useState();
-const [lastname , setLastname] = useState();
-const [password , setPassword] = useState();
-const [asicid , setAsicid] = useState();
-const [company , setCompany] = useState();
-const [location , setLocation] = useState();
-// const [expdate , setExpdate] = useState();
-	
-// Push Function
-const Push = () => {
-  let r = (Math.random() + 1).toString(36).substring(7);
-	database.ref(`/Users/${r}`).set({
-	email : email,
-	firstname : firstname,
-	lastname : lastname,
-	password : password,
-  asicid : asicid,
-  company : company,
-  location : location,
-  expdate : "",
-	}).catch(alert);
-}
+const [email , setEmail] = useState("");
+const [name , setFirstname] = useState("");
+const [lastname , setLastname] = useState("");
+const [password , setPassword] = useState("");
+const [asicid , setAsicid] = useState("");
+const [company , setCompany] = useState("");
+const [location , setLocation] = useState("");
+const [expdate , setExpdate] = useState();
+const [user, loading, error] = useAuthState(auth);
+const history = useHistory();
+const register = () => {
+  if (!name) alert("Please Enter firstname");
+  if (!lastname) alert("Please Enter lastname");
+  if (!asicid) alert("Please Enter asicid");
+  if (!company) alert("Please Enter company");
+  if (!location) alert("Please Enter location");
+  if (!expdate) alert("Please Enter Expiry Date");
+  // if (!email) alert("Please Enter Email");
+  // if (!password) alert("Please Enter password");
+  registerWithEmailAndPassword(name,email, password,lastname,asicid,company,location,expdate);
+  // history.push("/admin")
+};
+useEffect(() => {
+  if (loading) return;
+  if (user) history.push("/admin");
+}, [user, loading]);
+
   return (
         <Grid container>
             {/* <Backdrop className={classes.backdrop} open={loading}>
                 <CircularProgress color="inherit" />
             </Backdrop> */}
-         
+          <Dialog
+        maxWidth={"sm"}
+        fullWidth={"xs"}
+        disableBackdropClick
+        open={true}
+        // onClose={handleClose}
+        aria-labelledby="form-dialog-title"
+      >
             <DialogTitle id="form-dialog-title">Signup Digital Asic</DialogTitle>
             <DialogContent>
                 
@@ -255,7 +270,7 @@ const Push = () => {
                 onChange={(e) => setEmail(e.target.value)}
               />
               <TextField
-                value={firstname}
+                value={name}
                 autoFocus
                 margin="dense"
                 id="firstName"
@@ -317,16 +332,17 @@ const Push = () => {
                 label="Expiration Date"
                 type="date"
                 defaultValue="2025-12-30"
-                // onChange={handleInput}
-                // value={expdate}
+                onChange={(e) => setExpdate(e.target.value)}
+                value={expdate}
                 fullWidth
             />
             </DialogContent>
             <DialogActions>
-              <Button onClick={Push} color="secondary">
+              <Button onClick={register} color="secondary">
                 Request Register
               </Button>
             </DialogActions>
+            </Dialog>
         </Grid>
   )
 }

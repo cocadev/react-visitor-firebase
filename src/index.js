@@ -28,19 +28,23 @@ import Logout from "views/Login/logout";
 import Signup from "views/Signup";
 import AuthWrapper from "views/Login/wrapper"
 import "assets/css/material-dashboard-react.css?v=1.9.0";
+import App from "App";
 
 const hist = createBrowserHistory();
 
 ReactDOM.render(
-  <Router history={hist}>
-    <Switch>
-      <Route path="/login" exact={true} component={Login}/>
-      <Route path="/logout" exact={true} component={Logout}/>
-      <Route path="/admin" component={AuthWrapper(Admin, hist, "admin")} />
-      <Route path="/user" component={AuthWrapper(User, hist, "user")} />
-      <Route path="/signup" component={Signup} />
-      <Redirect from="/" to="/admin" />
-    </Switch>
-  </Router>,
+  <App/>,
   document.getElementById("root")
 );
+
+
+
+
+// if (user) {
+//   // User is signed in, see docs for a list of available properties
+//   // https://firebase.google.com/docs/reference/js/firebase.User
+//   // ...
+// } else {
+//   // No user is signed in.
+// }
+
