@@ -10,6 +10,9 @@ import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import Hidden from "@material-ui/core/Hidden";
 import Poppers from "@material-ui/core/Popper";
 import Divider from "@material-ui/core/Divider";
+import { signOut } from "firebase/auth";
+import { auth, db, logout } from "../../firebase";
+
 // @material-ui/icons
 import Person from "@material-ui/icons/Person";
 import Notifications from "@material-ui/icons/Notifications";
@@ -50,8 +53,13 @@ export default function AdminNavbarLinks() {
     console.log("=======close profile==", e)
     setOpenProfile(null);
   };
-  const handleLogout = () =>{
-    history.push("/logout")
+  // const handleLogout = () =>{
+  //   history.push("/logout")
+  // }
+  const logoutfunction = () => {
+    // logout();
+    signOut(auth);
+    window.location.href="/"
   }
   return (
     <div>
@@ -127,7 +135,7 @@ export default function AdminNavbarLinks() {
                     </MenuItem>
                     <Divider light />
                     <MenuItem
-                      onClick={handleLogout}
+                    onClick={logoutfunction}
                       className={classes.dropdownItem}
                     >
                       Logout

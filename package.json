@@ -11,7 +11,7 @@
     "browser-image-compression": "^1.0.15",
     "chartist": "0.10.1",
     "classnames": "2.2.6",
-    "firebase": "^8.3.1",
+    "firebase": "^9.6.2",
     "history": "4.10.1",
     "material-ui-popup-state": "^1.9.3",
     "materialui-daterange-picker": "^1.1.92",
@@ -22,7 +22,8 @@
     "react-aws-s3": "^1.5.0",
     "react-chartist": "0.14.3",
     "react-dom": "^17.0.1",
-    "react-router-dom": "5.2.0",
+    "react-firebase-hooks": "^5.0.3",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "^4.0.0",
     "react-swipeable-views": "^0.13.9"
   },
