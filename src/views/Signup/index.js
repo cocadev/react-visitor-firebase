@@ -222,7 +222,7 @@ const [password , setPassword] = useState("");
 const [asicid , setAsicid] = useState("");
 const [company , setCompany] = useState("");
 const [location , setLocation] = useState("");
-const [expdate , setExpdate] = useState();
+const [expdate , setExpdate] = useState("2025-12-30");
 const [user, loading, error] = useAuthState(auth);
 const history = useHistory();
 const register = () => {
@@ -242,6 +242,18 @@ useEffect(() => {
   if (user) history.push("/admin");
 }, [user, loading]);
 
+const useStyles = makeStyles((theme) => ({
+  input: {
+    textTransform: "uppercase",
+    // marginTop: "10px",
+    // width: "100%",
+    // borderRadius: 4,
+    // backgroundColor: "#FFFFFF",
+  },
+}));
+
+const classes = useStyles();
+
   return (
 
 <Grid container>
@@ -253,7 +265,7 @@ useEffect(() => {
   // onClose={handleClose}
   aria-labelledby="form-dialog-title"
 >
-  <DialogTitle style={{ textAlign: 'center', }}>Signup Digital Asic</DialogTitle>
+  <DialogTitle style={{ textAlign: 'center', }}>Signup Digital ASIC</DialogTitle>
   <br />
   <DialogContent >
     <TextField
@@ -286,7 +298,6 @@ useEffect(() => {
       fullWidth
     />
     <br /><br />
-   
     <TextField
       variant="outlined"
       value={password}
@@ -297,14 +308,15 @@ useEffect(() => {
       fullWidth
     />
     <br /><br />
-  
     <TextField
+      className={classes.input}
       variant="outlined"
       value={asicid}
       autoFocus
-      id="asicId"
-      label="Asic Id"
+      id="ASICID"
+      label="ASIC ID"
       onChange={(e) => setAsicid(e.target.value)}
+      inputProps={{ style: { textTransform: "uppercase" } }}
       fullWidth
     />
     <br /><br />
@@ -343,19 +355,18 @@ useEffect(() => {
   </DialogContent>
   <br />
   <div style={{ textAlign: 'center'}}>
-    <Button   onClick={register}  color="primary" size='large' variant='contained' style={{width: 200}}>
+    <Button  onClick={register}  color="primary" size='large' variant='contained' style={{width: 200}}>
       {loading? <CircularProgress color='#fff' size={26}/> : 'Sign Up'}
     </Button>
   </div>
   <div style={{ textAlign: 'center', marginTop:"10px"}}>
     <Link to="/login" color="secondary" size='large' variant='contained' style={{width: 200}}>
-      {loading? <CircularProgress color='#fff' size={26}/> : "Already Registered ? Login"} 
+      {loading? <CircularProgress color='#fff' size={26}/> : "Already Registered ? Login"}
     </Link>
   </div>
   <br />
 </Dialog>
 </Grid>
-
 
   )
 }
