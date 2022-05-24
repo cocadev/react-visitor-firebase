@@ -222,6 +222,11 @@ function Login() {
                 {loading? <CircularProgress color='#fff' size={26}/> : 'Log In'}
               </Button>
             </div>
+            <div style={{ textAlign: 'center', marginTop:"10px"}}>
+              <Link to="/signup" color="secondary" size='large' variant='contained' style={{width: 200}}>
+                {loading? <CircularProgress color='#fff' size={26}/> : "Don't have an account? Sign Up"} 
+              </Link>
+            </div>
             <br />
           </Dialog>
         </Grid>
