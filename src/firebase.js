@@ -52,14 +52,14 @@ const firebaseConfig = {
 // const app = initializeApp({
 //   // credential: initializeApp.credential.cert(serviceAccount),
 //   credential: applicationDefault(),
-//   databaseURL: "https://demoreactjs-8c7ee-default-rtdb.firebaseio.com"
+//   databaseURL: "https://my-project-4701e-default-rtdb.firebaseio.com"
 // });
 // import { getAuth } from "firebase-admin/auth";
 
 // const app = initializeApp({
 //   credential: initializeApp.credential.cert({
-//     projectId: "demoreactjs-8c7ee",
-//     clientEmail:"firebase-adminsdk-tnsfe@demoreactjs-8c7ee.iam.gserviceaccount.com",
+//     projectId: "my-project-4701e",
+//     clientEmail:"firebase-adminsdk-w13r8@my-project-4701e.iam.gserviceaccount.com",
 //     privateKey: serviceAccount.private_key?.replace(/\\n/g, '\n'),
 //   }),
 // })
