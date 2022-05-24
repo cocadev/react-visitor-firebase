@@ -243,107 +243,120 @@ useEffect(() => {
 }, [user, loading]);
 
   return (
-        <Grid container>
-            {/* <Backdrop className={classes.backdrop} open={loading}>
-                <CircularProgress color="inherit" />
-            </Backdrop> */}
-          <Dialog
-        maxWidth={"sm"}
-        fullWidth={"xs"}
-        disableBackdropClick
-        open={true}
-        // onClose={handleClose}
-        aria-labelledby="form-dialog-title"
-      >
-            <DialogTitle id="form-dialog-title">Signup Digital Asic</DialogTitle>
-            <DialogContent>
-                
-              <DialogContentText>
-                Please input digital asic details
-              </DialogContentText>
-              <TextField
-                value={email}
-                autoFocus
-                margin="dense"
-                id="email"
-                label="Email"
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              <TextField
-                value={name}
-                autoFocus
-                margin="dense"
-                id="firstName"
-                label="First Name"
-                onChange={(e) => setFirstname(e.target.value)}
-                fullWidth
-              />
-    
-              <TextField
-                value={lastname}
-                autoFocus
-                margin="dense"
-                id="lastName"
-                label="Last Name"
-                onChange={(e) => setLastname(e.target.value)}
-                fullWidth
-              />
-    
-              <TextField
-                value={password}
-                margin="dense"
-                id="password"
-                label="Password"
-                type="password"
-                fullWidth
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              
-              <TextField
-                value={asicid}
-                autoFocus
-                margin="dense"
-                id="asicId"
-                label="Asic Id"
-                onChange={(e) => setAsicid(e.target.value)}
-                fullWidth
-              />
-               <TextField
-                value={company}
-                autoFocus
-                margin="dense"
-                id="company"
-                label="company"
-                onChange={(e) => setCompany(e.target.value)}
-                fullWidth
-              />
-    
-              <TextField
-                value={location}
-                autoFocus
-                margin="dense"
-                id="location"
-                label="Location"
-                onChange={(e) => setLocation(e.target.value)}
-                fullWidth
-              />
-            <TextField
-                id="expDate"
-                label="Expiration Date"
-                type="date"
-                defaultValue="2025-12-30"
-                onChange={(e) => setExpdate(e.target.value)}
-                value={expdate}
-                fullWidth
-            />
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={register} color="secondary">
-                Request Register
-              </Button>
-            </DialogActions>
-            </Dialog>
-        </Grid>
+
+<Grid container>
+<Dialog
+  maxWidth={"sm"}
+  fullWidth={"xs"}
+  disableBackdropClick
+  open={true}
+  // onClose={handleClose}
+  aria-labelledby="form-dialog-title"
+>
+  <DialogTitle style={{ textAlign: 'center', }}>Signup Digital Asic</DialogTitle>
+  <br />
+  <DialogContent >
+    <TextField
+      variant="outlined"
+      value={email}
+      autoFocus
+      id="email"
+      label="Email"
+      onChange={(e) => setEmail(e.target.value)}
+      fullWidth
+    />
+    <br /><br />
+    <TextField
+      variant="outlined"
+      value={name}
+      autoFocus
+      id="firstName"
+      label="First Name"
+      onChange={(e) => setFirstname(e.target.value)}
+      fullWidth
+    />
+    <br /><br />
+    <TextField
+      variant="outlined"
+      value={lastname}
+      autoFocus
+      id="lastName"
+      label="Last Name"
+      onChange={(e) => setLastname(e.target.value)}
+      fullWidth
+    />
+    <br /><br />
+   
+    <TextField
+      variant="outlined"
+      value={password}
+      autoFocus
+      id="password"
+      label="Password"
+      onChange={(e) => setPassword(e.target.value)}
+      fullWidth
+    />
+    <br /><br />
+  
+    <TextField
+      variant="outlined"
+      value={asicid}
+      autoFocus
+      id="asicId"
+      label="Asic Id"
+      onChange={(e) => setAsicid(e.target.value)}
+      fullWidth
+    />
+    <br /><br />
+    <TextField
+      variant="outlined"
+      value={company}
+      autoFocus
+      id="company"
+      label="Company"
+      onChange={(e) => setCompany(e.target.value)}
+      fullWidth
+    />
+    <br /><br />
+    <TextField
+      variant="outlined"
+      value={location}
+      autoFocus
+      id="location"
+      label="Location"
+      onChange={(e) => setLocation(e.target.value)}
+      fullWidth
+    />
+    <br /><br />
+    <TextField
+      variant="outlined"
+      value={expdate}
+      autoFocus
+      type="date"
+      id="expDate"
+      label="Expiration Date"
+      defaultValue="2025-12-30"
+      onChange={(e) => setExpdate(e.target.value)}
+      fullWidth
+    />
+    <br /><br />
+  </DialogContent>
+  <br />
+  <div style={{ textAlign: 'center'}}>
+    <Button   onClick={register}  color="primary" size='large' variant='contained' style={{width: 200}}>
+      {loading? <CircularProgress color='#fff' size={26}/> : 'Sign Up'}
+    </Button>
+  </div>
+  <div style={{ textAlign: 'center', marginTop:"10px"}}>
+    <Link to="/login" color="secondary" size='large' variant='contained' style={{width: 200}}>
+      {loading? <CircularProgress color='#fff' size={26}/> : "Already Registered ? Login"} 
+    </Link>
+  </div>
+  <br />
+</Dialog>
+</Grid>
+
+
   )
 }
 export default Signup;
