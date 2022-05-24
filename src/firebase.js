@@ -1,8 +1,14 @@
-import { initializeApp } from "firebase/app";
+import { initializeApp } from "firebase-admin/app";
+import { applicationDefault} from "firebase-admin/app";
+// const admin = require('firebase-admin/app')
+// import { initializeApp } from 'firebase/app';
+import { getAuth } from 'firebase-admin/auth'
 
+// import firebaseAdmin  from 'firebase-admin/app';
+import serviceAccount from './json/my-project-4701e-firebase-adminsdk-w13r8-e94e3c7f5c.json';
 import {
   GoogleAuthProvider,
-  getAuth,
+  // getAuth,
   signInWithPopup,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
@@ -37,8 +43,28 @@ const firebaseConfig = {
   appId: "1:978280351801:web:c2f25430f317a53469e5e8",
   measurementId: "G-KM7SRKJRK5"
 };
+// const app = initializeApp(firebaseConfig);
+// const initializeApp = firebaseAdmin.initializeApp;
+// const app =initializeApp({
+//   credential: applicationDefault(),
+//   projectId: serviceAccount.project_id,
+// });
+// const app = initializeApp({
+//   // credential: initializeApp.credential.cert(serviceAccount),
+//   credential: applicationDefault(),
+//   databaseURL: "https://demoreactjs-8c7ee-default-rtdb.firebaseio.com"
+// });
+// import { getAuth } from "firebase-admin/auth";
 
-const app = initializeApp(firebaseConfig);
+// const app = initializeApp({
+//   credential: initializeApp.credential.cert({
+//     projectId: "demoreactjs-8c7ee",
+//     clientEmail:"firebase-adminsdk-tnsfe@demoreactjs-8c7ee.iam.gserviceaccount.com",
+//     privateKey: serviceAccount.private_key?.replace(/\\n/g, '\n'),
+//   }),
+// })
+const app = initializeApp();
+
 const auth = getAuth(app);
 const db = getFirestore(app);
 const googleProvider = new GoogleAuthProvider();
