@@ -93,7 +93,6 @@ export const verifyAuth = () => {
     });
   };
 };
-
 export const fetchUserData = () => {
   return async (dispatch) => {
     dispatch(AUTH_FETCH_USER_DATA_INIT());
@@ -183,7 +182,6 @@ export const setPassword = (email, password, url) => {
     return dispatch(fetchUserData());
   };
 };
-
 export const resetPassword = (email) => {
   return async (dispatch, getState) => {
     dispatch(AUTH_RESET_PASSWORD_INIT());

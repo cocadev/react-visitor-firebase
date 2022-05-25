@@ -33,9 +33,9 @@ const Users = () => {
   const [search, setSearch] = useState('');
 
   useEffect(() => {
-    if (isAdmin) {
+    // if (isAdmin) {
       dispatch(fetchUsers());
-    }
+    // }
 
     return () => dispatch(usersCleanUp());
   }, [dispatch, isAdmin]);

@@ -3,6 +3,10 @@ import 'firebase/database';
 import 'firebase/auth';
 import 'firebase/storage';
 import 'firebase/functions';
+// import {
+//   signInWithEmailAndPassword,
+//   getAuth
+// } from 'firebase/auth'
 
 const config = {
   apiKey: "AIzaSyA3rJ1ZGRkIxR9hblnNhP2REDApGUXyQGk",
@@ -26,5 +30,6 @@ const config = {
 firebase.initializeApp(config);
 firebase.database();
 firebase.storage();
+
 
 export default firebase;

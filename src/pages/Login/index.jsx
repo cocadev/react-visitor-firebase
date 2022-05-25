@@ -1,19 +1,19 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import { Redirect, Link } from 'react-router-dom';
+import { Redirect, Link, useHistory } from 'react-router-dom';
 import classNames from 'classnames';
 import { toastr } from 'react-redux-toastr';
 import { StyledFirebaseAuth } from 'react-firebaseui';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers';
 import * as yup from 'yup';
-
-import firebase from 'firebase.js';
+import  firebase  from 'firebase.js';
 import {
   auth,
   setPassword,
   authCleanUp,
   authWithSocialMedia,
+  AUTH_PROVIDER_SUCCESS,
 } from 'state/actions/auth';
 import { useFormatMessage } from 'hooks';
 import { firebaseError, uiConfig } from 'utils';
@@ -26,8 +26,12 @@ const schema = yup.object().shape({
   password: yup.string().min(6).required(),
 });
 
+
+
+
 const Login = () => {
-  const { error, isAuth, loading, locale } = useSelector(
+  const history = useHistory();
+  const { isAuth, loading, locale } = useSelector(
     (state) => ({
       error: state.auth.error,
       isAuth: !!state.auth.userData.id,
@@ -36,8 +40,33 @@ const Login = () => {
     }),
     shallowEqual
   );
-
   const dispatch = useDispatch();
+  const logInWithEmailAndPassword = async (email, password1) => {
+    try {
+      const user1 = await firebase.auth().signInWithEmailAndPassword(email, password1).then(
+        (userCredential) => {
+          // Signed in
+          alert("signed in");
+          const {user} = userCredential;
+          console.log(userCredential);
+          console.log(user.email);
+          // <Redirect to={paths.ROOT} />;
+          // ...
+          dispatch(
+            AUTH_PROVIDER_SUCCESS({ id: user.uid, isAdmin:true,email:user.email,})
+          );
+          history.push(paths.ROOT);
+        }
+      );
+      console.log(user1);
+    } 
+    catch (err)
+    {
+      console.error(err);
+      alert(err.message);
+    }
+  };
+  
 
   const { register, handleSubmit, errors, watch } = useForm({
     defaultValues: {},
@@ -57,7 +86,6 @@ const Login = () => {
       dispatch(authCleanUp());
     };
   }, [dispatch]);
-
   const isEmailLink = firebase
     .auth()
     .isSignInWithEmailLink(window.location.href);
@@ -93,12 +121,13 @@ const Login = () => {
 
   const loginMessage = useFormatMessage('Login.login');
 
-  const setPasswordMessage = useFormatMessage('Login.setPassword');
+  // const setPasswordMessage = useFormatMessage('Login.setPassword');
 
   const forgotPasswordMessage = useFormatMessage('Login.forgotPassword');
 
   const invalidPasswordMessage = useFormatMessage('Login.invalidPassword');
-
+  const [email, setEmail] = useState("");
+  const [pass, setPass] = useState("");
   return (
     <section className="section hero is-fullheight is-error-section">
       {redirect}
@@ -127,6 +156,8 @@ const Login = () => {
                             'is-danger': errors.email,
                           })}
                           name="email"
+                          value={email}
+                          onChange={e => setEmail(e.target.value)}
                           ref={register}
                         />
                       </div>
@@ -151,6 +182,7 @@ const Login = () => {
                           )}
                           type="password"
                           name="password"
+                          onChange={e => setPass(e.target.value)}
                           ref={register}
                         />
                       </div>
@@ -177,8 +209,10 @@ const Login = () => {
                           className={classNames('button', 'is-black', {
                             'is-loading': loading,
                           })}
+                          onClick={() => logInWithEmailAndPassword(email, pass)}
                         >
-                          {isEmailLink ? setPasswordMessage : loginMessage}
+                          {/* {isEmailLink ? setPasswordMessage : loginMessage} */}
+                          Submit
                         </button>
                       </div>
                       {!isEmailLink && (
@@ -192,7 +226,7 @@ const Login = () => {
                         </div>
                       )}
                     </div>
-                    {error && (
+                    {/* {error && (
                       <p
                         className={classNames(
                           'has-text-danger',
@@ -201,7 +235,7 @@ const Login = () => {
                       >
                         {error}
                       </p>
-                    )}
+                    )} */}
                   </form>
                   {!isEmailLink && (
                     <>
