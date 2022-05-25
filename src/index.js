@@ -1,50 +1,40 @@
-/*!
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import ReduxToastr from 'react-redux-toastr';
 
-=========================================================
-* Material Dashboard React - v1.9.0
-=========================================================
+import LanguageWrapper from 'components/LanguageWrapper';
+import 'react-redux-toastr/lib/css/react-redux-toastr.min.css';
+import { configureStore } from './state/store';
+import './index.scss';
+import Router from './pages/Router';
+import * as serviceWorker from './serviceWorker';
 
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2020 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/material-dashboard-react/blob/master/LICENSE.md)
+import './assets/css/main.css';
 
-* Coded by Creative Tim
+const { store, persistor } = configureStore({});
 
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-import React from "react";
-import ReactDOM from "react-dom";
-import { createBrowserHistory } from "history";
-import { Router, Route, Switch, Redirect } from "react-router-dom";
-
-// core components
-import Admin from "layouts/Admin.js";
-import User from "layouts/User.js";
-import Login from "views/Login";
-import Logout from "views/Login/logout";
-import Signup from "views/Signup";
-import AuthWrapper from "views/Login/wrapper"
-import "assets/css/material-dashboard-react.css?v=1.9.0";
-import App from "App";
-
-const hist = createBrowserHistory();
-
-ReactDOM.render(
-  <App/>,
-  document.getElementById("root")
+const app = (
+  <Provider store={store}>
+    <LanguageWrapper>
+      <PersistGate persistor={persistor}>
+        <ReduxToastr
+          newestOnTop={false}
+          preventDuplicates
+          position="bottom-right"
+          getState={state => state.toastr}
+          transitionIn="fadeIn"
+          transitionOut="fadeOut"
+          progressBar
+          closeOnToastrClick
+        />
+        <Router />
+      </PersistGate>
+    </LanguageWrapper>
+  </Provider>
 );
 
+ReactDOM.render(app, document.getElementById('root'));
 
-
-
-// if (user) {
-//   // User is signed in, see docs for a list of available properties
-//   // https://firebase.google.com/docs/reference/js/firebase.User
-//   // ...
-// } else {
-//   // No user is signed in.
-// }
-
+serviceWorker.unregister();
