@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo } from 'react';
-import { useParams, Redirect } from 'react-router-dom';
+import { useParams, Redirect,useHistory } from 'react-router-dom';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import ClipLoader from 'react-spinners/ClipLoader';
 import * as yup from 'yup';
@@ -49,7 +49,7 @@ const User = () => {
   const editUserMessage = useFormatMessage('User.editUser');
 
   const newUserMessage = useFormatMessage('User.editUser');
-
+const history = useHistory();
   const onSubmitHandler = (value) => {
     const newUser = {
       ...value,
@@ -63,7 +63,7 @@ const User = () => {
     } else {
       dispatch(createUser(newUser));
     }
-    <Redirect to={paths.USERS} />;
+    history.push(paths.USERS);
   };
 
   return (

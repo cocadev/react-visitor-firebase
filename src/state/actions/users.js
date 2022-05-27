@@ -293,6 +293,7 @@ export const createUser = ({
           // });
           
           toastr.success('Success', "User Created Successfully");
+          
           // return firebaseUser.user.uid;
       }).catch(function (error) {
         alert(error.message);
