@@ -152,6 +152,36 @@ const UserForm = ({ isEditing, isProfile, user, onSubmitHandler, schema }) => {
                 <div className="field is-horizontal">
                   <div className="field-label is-normal">
                     <label className="label">
+                      {useFormatMessage('Password')}
+                    </label>
+                  </div>
+                  <div className="field-body">
+                    <div className="field">
+                      <div className="control">
+                        <input
+                          name="password"
+                          id="password"
+                          className={classNames('input', {
+                            'is-danger': errors.password,
+                          })}
+                          ref={register}
+                          type="password"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {errors.password && (
+                  <div className="field is-horizontal">
+                    <div className="field-label is-normal" />
+                    <div className="field-body">
+                      <ErrorMessage />
+                    </div>
+                  </div>
+                )}
+                <div className="field is-horizontal">
+                  <div className="field-label is-normal">
+                    <label className="label">
                       {useFormatMessage('UserForm.location')}
                     </label>
                   </div>
