@@ -9,6 +9,7 @@ import { createUser, modifyUser, fetchUsers } from 'state/actions/users';
 import paths from 'pages/Router/paths';
 import { useFormatMessage } from 'hooks';
 
+
 const schema = yup.object().shape({
   email: yup.string().email().required(),
   name: yup.string().required(),
@@ -62,6 +63,7 @@ const User = () => {
     } else {
       dispatch(createUser(newUser));
     }
+    <Redirect to={paths.USERS} />;
   };
 
   return (

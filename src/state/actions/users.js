@@ -1,9 +1,30 @@
-import { createAction } from 'redux-act';
-import { toastr } from 'react-redux-toastr';
+// import {
+//   useState
+// } from 'react';
+import {
+  createAction
+} from 'redux-act';
+import {
+  toastr
+} from 'react-redux-toastr';
+// import database from "firebase/database";
+import {
+  firebaseError
+} from 'utils';
 
-import { firebaseError } from 'utils';
-import firebase from 'firebase.js';
-import { checkUserData, AUTH_UPDATE_USER_DATA } from './auth';
+import firebase from 'firebase/app';
+// import "firebase/auth";
+
+
+// import 'firebase/database';
+// import 'firebase/auth';
+// import 'firebase/storage';
+// import 'firebase/functions';
+
+import {
+  checkUserData,
+  AUTH_UPDATE_USER_DATA
+} from './auth';
 import {
   fetchCollection,
   fetchDocument,
@@ -40,8 +61,11 @@ export const USERS_CLEAN_UP = createAction('USERS_CLEAN_UP');
 
 export const USERS_CLEAR_DATA_LOGOUT = createAction('USERS_CLEAR_DATA_LOGOUT');
 
+
 export const fetchUsers = (userId = '') => {
+
   return async (dispatch, getState) => {
+
     dispatch(checkUserData());
 
     dispatch(USERS_FETCH_DATA_INIT());
@@ -52,13 +76,17 @@ export const fetchUsers = (userId = '') => {
         user = await fetchDocument('users', userId);
       } catch (error) {
         toastr.error('', error);
-        return dispatch(USERS_FETCH_DATA_FAIL({ error }));
+        return dispatch(USERS_FETCH_DATA_FAIL({
+          error
+        }));
       }
 
       if (!user) {
         const errorMessage = 'User not available';
         toastr.error('', errorMessage);
-        return dispatch(USERS_FETCH_DATA_FAIL({ error: errorMessage }));
+        return dispatch(USERS_FETCH_DATA_FAIL({
+          error: errorMessage
+        }));
       }
 
       const users = getState().users.data;
@@ -71,7 +99,9 @@ export const fetchUsers = (userId = '') => {
       );
     }
 
-    const { id } = getState().auth.userData;
+    const {
+      id
+    } = getState().auth.userData;
 
     let users;
 
@@ -79,7 +109,9 @@ export const fetchUsers = (userId = '') => {
       users = await fetchCollection('users');
     } catch (error) {
       toastr.error('', error);
-      return dispatch(USERS_FETCH_DATA_FAIL({ error }));
+      return dispatch(USERS_FETCH_DATA_FAIL({
+        error
+      }));
     }
 
     return dispatch(
@@ -89,6 +121,7 @@ export const fetchUsers = (userId = '') => {
     );
   };
 };
+
 
 const deleteLogo = (oldLogo) => {
   if (!oldLogo.includes('firebasestorage')) {
@@ -101,8 +134,12 @@ const deleteLogo = (oldLogo) => {
 export const deleteUser = (id) => {
   return async (dispatch, getState) => {
     dispatch(USERS_DELETE_USER_INIT());
-    const { locale } = getState().preferences;
-    const { logoUrl } = getState()
+    const {
+      locale
+    } = getState().preferences;
+    const {
+      logoUrl
+    } = getState()
       .users.data.filter((user) => user.id === id)
       .pop();
 
@@ -123,7 +160,9 @@ export const deleteUser = (id) => {
     }
 
     toastr.success('', 'The user was deleted.');
-    return dispatch(USERS_DELETE_USER_SUCCESS({ id }));
+    return dispatch(USERS_DELETE_USER_SUCCESS({
+      id
+    }));
   };
 };
 
@@ -151,74 +190,115 @@ const getLogoUrl = (uid, file) => {
   return `${bucketUrl}/o/users%2F${uid}_200x200.${fileExtension}?alt=media`;
 };
 
+
+// const database = firebase.database();
 export const createUser = ({
   name,
   email,
+  password,
   location,
   file,
   createdAt,
   isAdmin,
 }) => {
+  console.log(name);
+  console.log(email);
+  console.log(password);
+  console.log(location);
+  console.log(file);
+  console.log(createdAt);
+  console.log(isAdmin);
+  const emailval = email;
+  const passval = password;
+  // const nameval = name;
+  // const locationval = location;
+  // const fileval = file;
+  // const createdAtval = createdAt;
+  // const isAdminval = isAdmin;
   return async (dispatch, getState) => {
     dispatch(USERS_CREATE_USER_INIT());
-    const { locale } = getState().preferences;
+    const {
+      locale
+    } = getState().preferences;
 
     let response;
-    try {
-      const createUserAuth = firebase
-        .functions()
-        .httpsCallable('httpsCreateUser');
+    const getId = async (uid) => {
 
-      response = await createUserAuth({ email, isAdmin });
-    } catch (error) {
-      const errorMessage = firebaseError(error.message, locale);
-      toastr.error('', errorMessage);
-      return dispatch(
-        USERS_CREATE_USER_FAIL({
-          error: errorMessage,
-        })
-      );
-    }
 
-    const { uid } = response.data;
 
-    let uploadLogoTask = null;
-    let logoUrl = null;
-    if (file) {
-      logoUrl = getLogoUrl(uid, file);
-      uploadLogoTask = uploadLogo(uid, file);
-    }
-    const userData = { name, email, location, logoUrl, createdAt, isAdmin };
 
-    const createUserDbTask = createDocument('users', uid, userData);
+      let uploadLogoTask = null;
+      let logoUrl = null;
+      if (file) {
+        logoUrl = getLogoUrl(uid, file);
+        uploadLogoTask = uploadLogo(uid, file);
+      }
+      const userData = {
+        name,
+        email,
+        location,
+        logoUrl,
+        createdAt,
+        isAdmin
+      };
 
-    const actionCodeSettings = {
-      url: process.env.REACT_APP_LOGIN_PAGE_URL,
-      handleCodeInApp: true,
+      const createUserDbTask = createDocument('users', uid, userData);
+
+      const actionCodeSettings = {
+        url: process.env.REACT_APP_LOGIN_PAGE_URL,
+        handleCodeInApp: true,
+      };
+
+      const sendSignInLinkToEmailTask = firebase
+        .auth()
+        .sendSignInLinkToEmail(email, actionCodeSettings);
+
+      try {
+
+        await Promise.all([
+          uploadLogoTask,
+          createUserDbTask,
+          sendSignInLinkToEmailTask,
+        ]);
+      } catch (error) {
+        const errorMessage = firebaseError(error.code, locale);
+        // toastr.error('', errorMessage);
+        return dispatch(
+          USERS_CREATE_USER_FAIL({
+            error: errorMessage,
+          })
+        );
+      }
+      // toastr.success('', 'User created successfully');
+      return dispatch(USERS_CREATE_USER_SUCCESS({
+        user: response.data
+      }));
     };
+    firebase.auth().createUserWithEmailAndPassword(emailval, passval)
+      .then(function (firebaseUser) {
 
-    const sendSignInLinkToEmailTask = firebase
-      .auth()
-      .sendSignInLinkToEmail(email, actionCodeSettings);
+        console.log("User ", firebaseUser.user.uid, " created successfully!");
+        getId(firebaseUser.user.uid);
+        
+        // updateFirestore(form, firebaseUser.uid);
+        
+        // database.ref("users").push({
+          //   email: emailval,
+          //   name: nameval,
+          //   location: locationval,
+          //   file: fileval,
+          //   createdAt: createdAtval,
+          //   isAdmin: isAdminval,
+          
+          // });
+          
+          toastr.success('Success', "User Created Successfully");
+          // return firebaseUser.user.uid;
+      }).catch(function (error) {
+        alert(error.message);
+      });
 
-    try {
-      await Promise.all([
-        uploadLogoTask,
-        createUserDbTask,
-        sendSignInLinkToEmailTask,
-      ]);
-    } catch (error) {
-      const errorMessage = firebaseError(error.code, locale);
-      toastr.error('', errorMessage);
-      return dispatch(
-        USERS_CREATE_USER_FAIL({
-          error: errorMessage,
-        })
-      );
-    }
-
-    toastr.success('', 'User created successfully');
-    return dispatch(USERS_CREATE_USER_SUCCESS({ user: response.data }));
+    
   };
 };
 
@@ -233,12 +313,17 @@ export const modifyUser = ({
   isProfile,
 }) => {
   return async (dispatch, getState) => {
+
     dispatch(USERS_MODIFY_USER_INIT());
-    const { locale } = getState().preferences;
-    const user = isProfile
-      ? getState().auth.userData
-      : getState().users.data.find((thisUser) => thisUser.id === id);
-    const { logoUrl } = user;
+    const {
+      locale
+    } = getState().preferences;
+    const user = isProfile ?
+      getState().auth.userData :
+      getState().users.data.find((thisUser) => thisUser.id === id);
+    const {
+      logoUrl
+    } = user;
     let deleteLogoTask;
     let uploadLogoTask;
     let newLogoUrl = null;
@@ -247,7 +332,6 @@ export const modifyUser = ({
       deleteLogoTask = logoUrl && deleteLogo(logoUrl);
       uploadLogoTask = uploadLogo(id, file);
     }
-
     const userData = {
       name,
       location,
@@ -269,10 +353,15 @@ export const modifyUser = ({
       );
     }
 
-    const { uid } = firebase.auth().currentUser;
+    const {
+      uid
+    } = firebase.auth().currentUser;
 
     if (id === uid) {
-      dispatch(AUTH_UPDATE_USER_DATA({ ...userData, id }));
+      dispatch(AUTH_UPDATE_USER_DATA({
+        ...userData,
+        id
+      }));
     }
 
     if (isProfile) {
@@ -281,7 +370,10 @@ export const modifyUser = ({
       toastr.success('', 'User updated successfully');
     }
 
-    return dispatch(USERS_MODIFY_USER_SUCCESS({ user: userData, id }));
+    return dispatch(USERS_MODIFY_USER_SUCCESS({
+      user: userData,
+      id
+    }));
   };
 };
 
