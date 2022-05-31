@@ -60,7 +60,7 @@ const Aside = ({ handleMobileToggle }) => {
       <Link to={paths.ROOT} className="aside-tools">
         <div className="aside-tools-label">
           <span>
-            <b>React</b> Firebase
+            <b>Visitor Pass App</b>
           </span>
         </div>
       </Link>
@@ -77,6 +77,21 @@ const Aside = ({ handleMobileToggle }) => {
               </span>
               <span className="menu-item-label">
                 {useFormatMessage('Aside.home')}
+              </span>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to={paths.VISITOR_PASS_REQUESTED}
+              className="has-icon"
+              onClick={handleMobileToggle}
+            >
+              <span className="icon">
+                <i className="mdi mdi-home" />
+              </span>
+              <span className="menu-item-label">
+                {/* {useFormatMessage('Aside.home')} */}
+                Visitor Pass Request
               </span>
             </NavLink>
           </li>

@@ -50,8 +50,6 @@ const Login = () => {
           const {user} = userCredential;
           console.log(userCredential);
           console.log(user.email);
-          // <Redirect to={paths.ROOT} />;
-          // ...
           dispatch(
             AUTH_PROVIDER_SUCCESS({ id: user.uid, isAdmin:true,email:user.email,})
           );
@@ -257,6 +255,7 @@ const Login = () => {
                       </div>
                     </>
                   )}
+                  <p style={{textAlign:'center'}}>Did not have any account? <span><Link to="/register">Register</Link></span></p>
                 </div>
               </div>
             </div>

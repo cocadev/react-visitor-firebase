@@ -1,12 +1,12 @@
 import React from 'react';
-import classNames from 'classnames';
+// import classNames from 'classnames';
 
-import classes from './Footer.module.scss';
+// import classes from './Footer.module.scss';
 
 const Footer = () => {
   return (
     <footer className="footer">
-      <div className="container-fluid">
+      {/* <div className="container-fluid">
         <div className={classNames('level', classes.level)}>
           <div className="level-left">
             <div className="level-item">
@@ -26,7 +26,7 @@ const Footer = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </footer>
   );
 };
