@@ -255,6 +255,7 @@ const Login = () => {
                       </div>
                     </>
                   )}
+                  <p style={{textAlign:'center'}}>Did not have any account? <span><Link to="/register">Register</Link></span></p>
                 </div>
               </div>
             </div>

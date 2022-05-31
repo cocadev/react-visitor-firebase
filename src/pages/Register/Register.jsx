@@ -7,6 +7,7 @@ import { Redirect,useHistory } from 'react-router-dom';
 import firebase from "firebase.js";
 import 'firebase/auth';
 import { createUser } from 'state/actions/users';
+import { Link } from 'react-router-dom';
 const Register = () => {
     const { isAuth, loading, locale } = useSelector(
         (state) => ({
@@ -107,6 +108,7 @@ const Register = () => {
                                             </button>
                                         </div>
                                     </div>
+                                    <p style={{textAlign:'center'}}>Already have an account? <span><Link to="/login">Login</Link></span></p>
                                 </div>
                             </div>
                         </div>
