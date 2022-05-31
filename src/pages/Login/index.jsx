@@ -50,8 +50,6 @@ const Login = () => {
           const {user} = userCredential;
           console.log(userCredential);
           console.log(user.email);
-          // <Redirect to={paths.ROOT} />;
-          // ...
           dispatch(
             AUTH_PROVIDER_SUCCESS({ id: user.uid, isAdmin:true,email:user.email,})
           );

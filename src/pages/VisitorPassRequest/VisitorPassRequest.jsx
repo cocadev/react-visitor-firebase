@@ -22,7 +22,7 @@ const VisitorPassRequest = () => {
                         <tr>
                             <th style={{whiteSpace:"nowrap"}}>Id</th>
                             <th style={{whiteSpace:"nowrap"}}>email</th>
-                            <th style={{whiteSpace:"nowrap"}}>escort ASIC</th>
+                            <th style={{whiteSpace:"nowrap"}}>Escort ASIC</th>
                             <th style={{whiteSpace:"nowrap"}}>Escort Name</th>
                             <th style={{whiteSpace:"nowrap"}}>FirstName</th>
                             <th style={{whiteSpace:"nowrap"}}>ID Number</th>

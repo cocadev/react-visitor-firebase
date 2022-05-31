@@ -15,7 +15,7 @@ import {
 import firebase from 'firebase/app';
 // import "firebase/auth";
 
-
+const auth = firebase.auth()
 // import 'firebase/database';
 // import 'firebase/auth';
 // import 'firebase/storage';
@@ -192,7 +192,7 @@ const getLogoUrl = (uid, file) => {
 
 
 // const database = firebase.database();
-export const createUser = ({
+export const createUser = async ({
   name,
   email,
   password,
@@ -274,7 +274,7 @@ export const createUser = ({
         user: response.data
       }));
     };
-    firebase.auth().createUserWithEmailAndPassword(emailval, passval)
+    const myid = firebase.auth().createUserWithEmailAndPassword(emailval, passval)
       .then(function (firebaseUser) {
 
         console.log("User ", firebaseUser.user.uid, " created successfully!");
@@ -292,18 +292,16 @@ export const createUser = ({
           
           // });
           
-          toastr.success('Success', "User Created Successfully");
-          
-          // return firebaseUser.user.uid;
+          toastr.success('Success', "User Register Successfully");
+          return firebaseUser.user.uid;
       }).catch(function (error) {
         alert(error.message);
       });
-
-    
+    return myid;
   };
 };
 
-export const modifyUser = ({
+export const modifyUser = async ({
   name,
   location,
   isAdmin,
@@ -322,9 +320,8 @@ export const modifyUser = ({
     const user = isProfile ?
       getState().auth.userData :
       getState().users.data.find((thisUser) => thisUser.id === id);
-    const {
-      logoUrl
-    } = user;
+    const logo = user;
+    const logoUrl = logo?.logoUrl
     let deleteLogoTask;
     let uploadLogoTask;
     let newLogoUrl = null;
@@ -337,7 +334,7 @@ export const modifyUser = ({
       name,
       location,
       createdAt,
-      isAdmin: isAdmin || user.isAdmin,
+      isAdmin: isAdmin || user?.isAdmin || false,
       logoUrl: logoUrl || newLogoUrl,
     };
     const updateUserDbTask = updateDocument('users', id, userData);

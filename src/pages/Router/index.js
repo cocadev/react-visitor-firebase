@@ -10,15 +10,19 @@ import NotFound from 'pages/NotFound';
 import User from 'pages/User';
 import Section from 'pages/Section';
 import Submenu from 'pages/Submenu';
+import Register from 'pages/Register/Register';
 import VisitorPassRequest from 'pages/VisitorPassRequest/VisitorPassRequest';
 import paths from './paths';
 import PrivateRoute from './PrivateRoute';
+import OtherDetails from 'pages/Register/OtherDetails';
 
 const RouterComponent = () => {
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path={paths.LOGIN} component={Login} />
+        <Route exact path={paths.REGISTER} component={Register} />
+        <Route exact path={paths.COMPLETE_REGISTER} component={OtherDetails} />
         <Route exact path={paths.RESET_PASSWORD} component={ResetPassword} />
         <PrivateRoute path={paths.ADD_USER} component={User} />
         <PrivateRoute path={paths.MODIFY_USER} component={User} />

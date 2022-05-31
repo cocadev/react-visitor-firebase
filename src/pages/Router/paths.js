@@ -1,6 +1,8 @@
 export default {
   ROOT: '/',
   LOGIN: '/login',
+  REGISTER:"/register",
+  COMPLETE_REGISTER:"/register/:id",
   USERS: '/users',
   ADD_USER: '/users/new',
   MODIFY_USER: '/users/:id',
