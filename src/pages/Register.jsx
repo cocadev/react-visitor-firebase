@@ -16,6 +16,14 @@ const Register = () => {
     if (password == CPassword) {
       try {
         const res = await createUserWithEmailAndPassword(appAuth, email, password);
+      //   const res =  await createUserWithEmailAndPassword(appAuth, email , password)
+      //   .then((userCredential)=>{
+      //     // send verification mail.
+      //   userCredential.user.sendEmailVerification();
+      //   // auth.signOut();
+      //   alert("Email sent");
+      // })
+
         console.log(res.user)
         const data = {
           uid: res.user.uid,

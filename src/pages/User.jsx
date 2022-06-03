@@ -66,7 +66,7 @@ const Users = () => {
                 <div className="card">
                   <div className="card-body">
                     <div className="table-responsive">
-                      <table className="table-hover table display expandable-table datatable">
+                      <table className="table-hover table display expandable-table datatable" id="data-table">
                         <thead>
                           <tr>
                             <th>No</th>

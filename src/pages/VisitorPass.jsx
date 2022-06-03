@@ -46,7 +46,7 @@ const VisitorPass = () => {
                                     </div>
                                 </div>
                             </div>
-                            <table className='table-hover table display expandable-table datatable'>
+                            <table className='table-hover table display expandable-table datatable' id='table'>
                                 <thead>
                                     <tr>
                                         <th style={{ whiteSpace: "nowrap" }}>No</th>
