@@ -8,7 +8,7 @@ import { appAuth, realTimeDatabase } from '../firebase'
 import toast from 'react-hot-toast'
 import { updateEmail } from 'firebase/auth'
 import { setUser } from '../store/accountSlice'
-import { getData } from '../firebase/getData'
+import { getData, loginUser } from '../firebase/getData'
 import { setData } from '../firebase/setData'
 const Profile = () => {
     const [email, setEmail] = useState("")
@@ -20,12 +20,12 @@ const Profile = () => {
     // const user = appAuth.currentUser
     console.log(appAuth.currentUser)
     const editUser = async () => {
-        if (email != user.email) {
-            try {
-                await updateEmail(appAuth.currentUser,email)
-            } catch (err) {
-            }
-        }
+        // if (email != user.email) {
+        //     try {
+        //         await updateEmail(appAuth.currentUser,email)
+        //     } catch (err) {
+        //     }
+        // }
         const data = {
             uid: user.uid,
             name: username,
@@ -40,7 +40,7 @@ const Profile = () => {
     useEffect(() => {
         const callNow = async () => {
             const id = appAuth.currentUser.uid
-            const user1 = (await getData(`users/${id}`)).val()
+            const user1 = await loginUser();
             setUser(user1)
             setEmail(user1.email)
             setUsername(user1.name)
@@ -67,7 +67,7 @@ const Profile = () => {
                                             <div className="mb-3">
                                                 <div className="form-group">
                                                     <label>Email</label>
-                                                    <input type="email" className="form-control form-control-lg" id="exampleInputEmail1" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} />
+                                                    <input type="email" className="form-control form-control-lg" id="exampleInputEmail1" placeholder="Email" value={email} readonly />
                                                 </div>
                                             </div>
                                             <div className="mb-3">

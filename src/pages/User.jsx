@@ -7,6 +7,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { getData } from '../firebase/getData';
+import { removeData } from '../firebase/removeData';
 
 const Users = () => {
   const [users, setUsers] = useState([])
@@ -29,8 +30,9 @@ const Users = () => {
 
   const deleteuser = async (id) => {
     try {
-      await remove(ref(realTimeDatabase, "users/" + id))
+      await removeData(`users/${id}`)
       toast.success("User removed Successfully")
+      toast.success(id)
     } catch (err) {
       toast.error(err.message)
     }
@@ -102,7 +104,6 @@ const Users = () => {
                                           <span className="ti-trash"></span>
                                           </label>
                                           <Link to={`/users/${item.uid}`}>
-
                                             <label className="btn btn-warning btn-sm mx-2" style={{ cursor: "pointer" }} >
                                               <span className="ti-pencil"></span>
                                             </label>

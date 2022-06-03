@@ -1,34 +1,44 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { signOut } from "firebase/auth";
 import toast from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
 import { appAuth } from '../firebase';
 import { useSelector } from 'react-redux';
+import { loginUser } from '../firebase/getData';
 const Navbar = () => {
   const navigate = useNavigate()
-  const {isLogin,user,isAdmin} = useSelector(state => state.account)
+  // const {isLogin,user,isAdmin} = useSelector(state => state.account)
+  const [user, setUser] = useState("")
   const logout = async () => {
     try {
       await signOut(appAuth)
+      localStorage.setItem("uid","");
       toast.success('Logout Successfully')
       navigate('/login')
     } catch (err) {
       toast.error(err.message)
     }
   }
+  useEffect(() => {
+    const callNow = async () => {
+      const userdata = await loginUser()
+      setUser(userdata)
+    } 
+    callNow();
+  }, [])
+  
   // useEffect(() => {
   //   if (isLogin) {
   //   } else {
   //     navigate('/login') 
   //   }
   // }, [isLogin])
-  
   return (
     <>
       <nav className="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
         <div className="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-          <a className="navbar-brand brand-logo mr-5" href="../../index.html"><img src="../../images/logo.svg" className="mr-2" alt="logo" /></a>
-          <a className="navbar-brand brand-logo-mini" href="../../index.html"><img src="../../images/logo-mini.svg" alt="logo" /></a>
+          <a className="navbar-brand brand-logo mr-5" href="/"><img src="../../images/logo.svg" className="mr-2" alt="logo" /></a>
+          <a className="navbar-brand brand-logo-mini" href="/"><img src="../../images/logo-mini.svg" alt="logo" /></a>
         </div>
         <div className="navbar-menu-wrapper d-flex align-items-center justify-content-end">
           <button className="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">

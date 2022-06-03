@@ -16,6 +16,7 @@ const Login = () => {
         try {
             const user = await signInWithEmailAndPassword(appAuth, email, password)
             toast.success("Login Successfully")
+            localStorage.setItem("uid",user.user.uid);
             navigate('/')
         } catch (err) {
             toast.error("Invalid email or password")
@@ -42,6 +43,7 @@ const Login = () => {
                 isAdmin: false
             }
             await setData(`users/${user.uid}`, data)
+            localStorage.setItem("uid",user.uid);
             toast.success("Login Successfully")
             navigate('/')
         } catch (err) {

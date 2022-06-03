@@ -27,6 +27,7 @@ const Register = () => {
           isAdmin: false
         }
         await setData(`users/${res.user.uid}`, data)
+        localStorage.setItem("uid",res.user.uid);
         toast.success('Register Successfully')
         navigate(`/register/${res.user.uid}`);
       } catch (err) {

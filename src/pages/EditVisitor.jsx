@@ -1,10 +1,10 @@
-import { get, ref, set } from 'firebase/database'
 import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { useNavigate, useParams } from 'react-router-dom'
 import Navbar from '../component/Navbar'
 import Sidebar from '../component/Sidebar'
-import { realTimeDatabase } from '../firebase'
+import { getData } from '../firebase/getData'
+import { setData } from '../firebase/setData'
 
 const EditVisitor = () => {
     const idtypes = [
@@ -32,7 +32,7 @@ const EditVisitor = () => {
     }
     const edit = async () => {
         try {
-            await set(ref(realTimeDatabase, `visitorPassReq/${id}`), { ...data, id })
+            await setData(`visitorPassReq/${id}`,{ ...data, id })
             toast.success("Visitor pass update successfully")
             navigate('/visitorpass')
         } catch (err) {
@@ -44,7 +44,7 @@ const EditVisitor = () => {
       const callNow = async () => {
           try {
               console.log(id)
-              const request1 = await get(ref(realTimeDatabase,`visitorPassReq/${id}`))
+              const request1 = await getData(`visitorPassReq/${id}`)
               const request = request1.val()
               setEmail(request['Email'])
               setASIC(request['Escort ASIC'])

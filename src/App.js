@@ -19,6 +19,8 @@ import VisitorPass from './pages/VisitorPass';
 import NewVisitor from './pages/NewVisitor';
 import EditVisitor from './pages/EditVisitor';
 import RegisterComplete from './pages/RegisterComplete';
+import { getData } from './firebase/getData';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   const dispatch = useDispatch()
@@ -57,15 +59,6 @@ function App() {
   return (
     <>
       {
-        loading ?
-          <>
-            <div className="d-flex" style={{ height: '100vh' }}>
-              <div className="m-auto">
-                <img src="/images/waiting.gif" alt="wait" width="290px" />
-              </div>
-            </div>
-          </>
-          :
           <Router>
             <Toaster/>
             <Routes>
@@ -97,13 +90,26 @@ function App() {
                     <EditUser />
                   </PrivetRoute>
                 }></Route>
-              <Route path='/profile' element={<Profile />}></Route>
-              <Route path='/visitorpass' element={<VisitorPass />}></Route>
-              <Route path='/register/:id' element={<RegisterComplete />}></Route>
-              <Route path='/visitorpass/new' element={<NewVisitor />}></Route>
-              <Route path='/visitorpass/:id' element={<EditVisitor />}></Route>
-              <Route path='/login' element={<Login />}></Route>
-              <Route path='/register' element={<Register />}></Route>
+              <Route path='/profile' element={
+                <PrivetRoute>
+                  <Profile />
+              </PrivetRoute>
+              }></Route>
+              <Route path='/visitorpass' element={
+                <PrivetRoute>
+              <VisitorPass />
+              </PrivetRoute>
+              }></Route>
+              <Route path='/register/:id' element={
+                <PrivetRoute>
+              <RegisterComplete />
+              </PrivetRoute>
+              }></Route>
+              <Route path='/visitorpass/new' element={
+              <PrivetRoute><NewVisitor /></PrivetRoute>}></Route>
+              <Route path='/visitorpass/:id' element={<PrivetRoute><EditVisitor /></PrivetRoute>}></Route>
+              <Route path='/login' element={<AuthRoute><Login /></AuthRoute>}></Route>
+              <Route path='/register' element={<AuthRoute><Register /></AuthRoute>}></Route>
             </Routes>
           </Router>
       }
@@ -112,13 +118,89 @@ function App() {
 }
 
 const PrivetRoute = ({ children }) => {
-  const { isLogin } = useSelector(state => state.account)
-  console.log(isLogin)
-  return <>
-    {
-      children
+  const user = localStorage.getItem('uid')
+  const [userdata, setUserdata] = useState("")
+  const [setData, setSetData] = useState(false)
+  const navigate = useNavigate()
+  useEffect(() => {
+    const callNow = async () => {
+      if (user) {
+        try {
+          const user1 = (await getData(`users/${user}`)).val()
+          setUserdata(user1)
+          setSetData(true)
+        } catch (err) {
+          toast.error(err.message)
+          setSetData(true)
+        }
+      } else {
+        navigate('/login')
+        localStorage.setItem("uid", "")
+        setSetData(true)
+      }
     }
-  </>
+    callNow();
+  }, [])
+  if (setData) {
+    return <>
+      {
+        userdata ? children : <Navigate to={'/login'} />
+      }
+    </>
+  } else {
+    return <>
+      <>
+        <div className="d-flex" style={{ height: '100vh' }}>
+          <div className="m-auto">
+            <img src="/images/waiting.gif" alt="wait" width="290px" />
+          </div>
+        </div>
+      </>
+    </>
+  }
+}
+
+const AuthRoute = ({ children }) => {
+  const user = localStorage.getItem('uid')
+  const [userdata, setUserdata] = useState("")
+  const [setData, setSetData] = useState(false)
+  const navigate = useNavigate()
+  useEffect(() => {
+    const callNow = async () => {
+      if (user) {
+        try {
+          const user1 = (await getData(`users/${user}`)).val()
+          setUserdata(user1)
+          setSetData(true)
+        } catch (err) {
+          toast.error(err.message)
+          setSetData(true)
+        }
+      } else {
+        navigate('/login')
+        localStorage.setItem("uid", "")
+        setSetData(true)
+      }
+    }
+    callNow();
+  }, [])
+  if (setData) {
+    return <>
+      {
+        !userdata ? children : <Navigate to={'/'} />
+      }
+    </>
+  } else {
+    return <>
+      <>
+        <div className="d-flex" style={{ height: '100vh' }}>
+          <div className="m-auto">
+            <img src="/images/waiting.gif" alt="wait" width="290px" />
+          </div>
+        </div>
+      </>
+    </>
+  }
 }
 
 export default App;

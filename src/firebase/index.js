@@ -3,13 +3,14 @@ import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { get, getDatabase, ref } from "firebase/database";
 const firebaseConfig = {
-    apiKey: "AIzaSyC0aPSXZ3WTJZ6ZOyp_1KE-dHkpplnHT2Y",
-    authDomain: "cocadev-81778.firebaseapp.com",
-    databaseURL: "https://cocadev-81778-default-rtdb.firebaseio.com",
-    projectId: "cocadev-81778",
-    storageBucket: "cocadev-81778.appspot.com",
-    messagingSenderId: "590135785261",
-    appId: "1:590135785261:web:757d55ba30d13e489145a4"
+    apiKey: "AIzaSyA3rJ1ZGRkIxR9hblnNhP2REDApGUXyQGk",
+    authDomain: "my-project-4701e.firebaseapp.com",
+    databaseURL: "https://my-project-4701e-default-rtdb.firebaseio.com",
+    projectId: "my-project-4701e",
+    storageBucket: "my-project-4701e.appspot.com",
+    messagingSenderId: "978280351801",
+    appId: "1:978280351801:web:c2f25430f317a53469e5e8",
+    measurementId: "G-KM7SRKJRK5"
 };
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
