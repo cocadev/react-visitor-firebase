@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth'
 import { ref, set } from 'firebase/database'
 import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
@@ -15,14 +15,24 @@ const Register = () => {
   const register = async () => {
     if (password == CPassword) {
       try {
-        const res = await createUserWithEmailAndPassword(appAuth, email, password);
-      //   const res =  await createUserWithEmailAndPassword(appAuth, email , password)
-      //   .then((userCredential)=>{
-      //     // send verification mail.
-      //   userCredential.user.sendEmailVerification();
-      //   // auth.signOut();
-      //   alert("Email sent");
-      // })
+        // const res = await createUserWithEmailAndPassword(appAuth, email, password);
+
+        const res = await createUserWithEmailAndPassword(appAuth, email, password)
+        // .then((userCredential) => {
+        //   // Signed in 
+        //   const user = userCredential.user;
+      
+        //   sendEmailVerification(user)
+        //     .then(() => {
+        //       // Email verification sent!
+        //       alert("email")
+        //       // let msg = 'An email verification link has been sent to ' + user.email;
+        //       // document.querySelector('.success.email_msg').innerHTML=msg;
+        //     }).catch(err => {
+        //       alert(err.message)
+        //     });
+        // })
+    
 
         console.log(res.user)
         const data = {

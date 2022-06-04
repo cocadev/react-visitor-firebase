@@ -60,7 +60,7 @@ const RegisterComplete = () => {
 
                                     <div className="form-group">
                                         <label htmlFor="">Location</label>
-                                        <input type="text" className="form-control form-control-lg" value={location} placeholder="Password" onChange={e => setLocation(e.target.value)} />
+                                        <input type="text" className="form-control form-control-lg" value={location} placeholder="Location" onChange={e => setLocation(e.target.value)} />
                                     </div>
                                     <div className="mt-3">
                                         <button className="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" onClick={submit}>SIGN UP</button>
